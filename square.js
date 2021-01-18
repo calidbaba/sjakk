@@ -1,6 +1,6 @@
 class Square{
-    constructor(occupied, xpos, ypos){
-        this.occupied = occupied
+    constructor(xpos, ypos){
+        this.occupied = false
         this.xpos = xpos
         this.ypos = ypos
     }
@@ -13,5 +13,8 @@ class Square{
     }
     getPosy(){
         return this.ypos
+    }
+    hasPiece(piece){
+        this.occupied = piece
     }
 }
