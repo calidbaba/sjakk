@@ -1,6 +1,7 @@
+let turn = "white"
 class Square{
     constructor(xpos, ypos){
-        this.occupied = false
+        this.occupied = false,
         this.xpos = xpos
         this.ypos = ypos
     }

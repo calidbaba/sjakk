@@ -16,6 +16,7 @@ let ctx = boardEl.getContext("2d")
 //event handler for clicks
 boardEl.addEventListener("mousedown", checkClick)
 boardEl.addEventListener("mouseup", checkUp)
+//making board
 for(let i=0; i<cells; i++){
     let middler = []
     for(let k=0; k<cells; k++){
@@ -26,26 +27,26 @@ for(let i=0; i<cells; i++){
 }
 for (i of matrix){
     for(k of i){
-        k.draw()
+        k.draw("P")
     }
 }
 function makePawns(){
     //making the pawn objects
     middler = []
     for (i of matrix[1]){
-        middler.push(new Pawn(i.getPosx(), i.getPosy(), false))
+        middler.push(new Pawn(i.getPosx(), i.getPosy(), false, "black"))
     }
     pawns.push(middler)
     middler = []
     for (i of matrix[6]){
-        middler.push(new Pawn(i.getPosx(), i.getPosy(), false))
+        middler.push(new Pawn(i.getPosx(), i.getPosy(), false, "white"))
     }
     
     //actually drawing them to the screen
     pawns.push(middler)
     for (i of pawns){
         for(k of i){
-            k.draw()
+            k.draw("P")
             k.presence(k)
         }
     }
@@ -53,21 +54,15 @@ function makePawns(){
 let selected
 function checkClick(e){
     selected = findPiece(e.clientX, e.clientY)
+    console.log(selected)
+    console.log(selected.occupied)
 }
 function checkUp(e){
-    x = Math.floor(e.clientX/sizex)
-    y = Math.floor(e.clientY/sizey)
-    if (selected.occupied != false && matrix[x][y].occupied == false){
-        selected.occupied.delete()
-        selected.occupied.xpos = x*sizex
-        selected.occupied.ypos = y*sizey
-        selected.occupied.draw()
-        selected.occupied.presence(selected.occupied)
-        selected.occupied = false
-
-    }
-    else{
-        console.log("no")
+    
+    let x = Math.floor(e.clientX/sizex)
+    let y = Math.floor(e.clientY/sizey)
+    if (selected.occupied != false && selected.occupied.color == turn){
+        selected.occupied.move(matrix[y][x])
     }
 }
 function findPiece(x,y){
@@ -79,7 +74,7 @@ function findPiece(x,y){
     if (ypos > 7){
         ypos = 7
     }
-    return matrix[xpos][ypos]
+    return matrix[ypos][xpos]
     //if (matrix[xpos][ypos].occupied != false){
     //    console.log(matrix[xpos][ypos].occupied)
 
