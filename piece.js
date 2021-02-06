@@ -1,9 +1,10 @@
 class Piece{
-    constructor(xpos, ypos, dead, color){
+    constructor(xpos, ypos, dead, color, sign){
         this.xpos = xpos
         this.ypos = ypos
         this.dead = dead
         this.color = color
+        this.sign = sign
     }
     presence(piece){
         if (this.dead == false){
@@ -21,13 +22,13 @@ class Piece{
         this.ypos = square.ypos
         this.xpos = square.xpos
         this.presence(this)
-        this.draw("P")        
+        this.draw()        
     }
     die(){
         this.dead = true
         this.delete()
     }
-    draw(letter){
+    draw(){
         ctx.font = "30px Arial"
         ctx.textAlign = "center"
         if (this.color == "white"){
@@ -36,7 +37,7 @@ class Piece{
         else{
             ctx.fillStyle = "black"
         }
-        ctx.fillText(letter, this.xpos + (sizex/2), this.ypos + (sizey/2))
+        ctx.fillText(this.sign, this.xpos + (sizex/2), this.ypos + (sizey/2))
         ctx.stroke()
         if(turn =="white"){
             turn = "black"

@@ -1,6 +1,6 @@
 class Pawn extends Piece{
-    constructor(xpos, ypos, dead, color){
-        super(xpos,ypos,dead, color)
+    constructor(xpos, ypos, dead, color, sign){
+        super(xpos,ypos,dead, color,sign)
 
     }
     move(square){
@@ -43,12 +43,14 @@ class Pawn extends Piece{
             }
         }
         //taking other pieces
-        else if (Math.abs(dennex -x) == 1 && square.occupied != false){
-            if (this.color == "white" && denney - y == 1 ){
+        if (Math.abs(dennex -x) == 1 && square.occupied != false){
+            console.log("wfiohoiqwg")
+            console.log(denney- y, this.color, square.color)    
+            if (this.color == "white" && denney - y == 1 && square.occupied.color == "black"){
                 square.occupied.die()
                 this.flytt(dennex, denney, square)
             }
-            if (this.color == "black" && denney - y == -1 ){
+            else if (this.color == "black" && denney - y == -1 && square.occupied.color == "white"){
                 square.occupied.die()
                 this.flytt(dennex, denney, square)
             }

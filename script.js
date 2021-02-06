@@ -27,28 +27,44 @@ for(let i=0; i<cells; i++){
 }
 for (i of matrix){
     for(k of i){
-        k.draw("P")
+        k.draw()
     }
 }
 function makePawns(){
     //making the pawn objects
     middler = []
     for (i of matrix[1]){
-        middler.push(new Pawn(i.getPosx(), i.getPosy(), false, "black"))
+        middler.push(new Pawn(i.getPosx(), i.getPosy(), false, "black", "P"))
     }
     pawns.push(middler)
     middler = []
     for (i of matrix[6]){
-        middler.push(new Pawn(i.getPosx(), i.getPosy(), false, "white"))
+        middler.push(new Pawn(i.getPosx(), i.getPosy(), false, "white", "P"))
     }
     
     //actually drawing them to the screen
     pawns.push(middler)
     for (i of pawns){
         for(k of i){
-            k.draw("P")
+            k.draw()
             k.presence(k)
         }
+    }
+}
+function makeTowers(){
+    let grid = [matrix[0][0], matrix[0][7]]
+    let tower
+    for (i of grid){
+        tower = new Tower(i.xpos, i.ypos, false, "black", "T")
+        tower.draw()
+        tower.presence(tower)
+    }
+    grid = [matrix[7][0], matrix[7][7]]
+    for (i of grid){
+        tower = new Tower(i.xpos, i.ypos, false, "white", "T")
+        tower.draw()
+        console.log(tower)
+        tower.presence(tower)
     }
 }
 let selected
@@ -82,3 +98,4 @@ function findPiece(x,y){
 
 }
 makePawns()
+makeTowers()
