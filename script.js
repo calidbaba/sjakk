@@ -63,8 +63,22 @@ function makeTowers(){
     for (i of grid){
         tower = new Tower(i.xpos, i.ypos, false, "white", "T")
         tower.draw()
-        console.log(tower)
         tower.presence(tower)
+    }
+}
+function makeHorses(){
+    let grid = [matrix[0][1], matrix[0][6]]
+    let horse
+    for (i of grid){
+        horse = new Horse(i.xpos, i.ypos, false, "black", "H")
+        horse.draw()
+        horse.presence(horse)
+    }
+    grid = [matrix[7][1], matrix[7][6]]
+    for (i of grid){
+        horse = new Horse(i.xpos, i.ypos, false, "white", "H")
+        horse.draw()
+        horse.presence(horse)
     }
 }
 let selected
@@ -99,3 +113,4 @@ function findPiece(x,y){
 }
 makePawns()
 makeTowers()
+makeHorses()
