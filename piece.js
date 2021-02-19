@@ -19,26 +19,23 @@ class Piece{
         //muligens bare this = false
         console.log("se her", square.occupied, square)
         matrix[y][x].occupied = false
+        matrix[y][x].reDraw()
         this.ypos = square.ypos
         this.xpos = square.xpos
         this.presence(this)
-        this.draw()        
+        this.draw(square)        
     }
     die(){
         this.dead = true
         this.delete()
     }
     draw(){
-        ctx.font = "30px Arial"
-        ctx.textAlign = "center"
-        if (this.color == "white"){
-            ctx.fillStyle = "red"
+        //ctx.fillText(this.sign, this.xpos + (sizex/2), this.ypos + (sizey/2))
+        let bilde = new Image(sizex, sizey)
+        bilde.src = `bilder/${this.sign}.${this.color}`
+        bilde.onload = () => {
+            ctx.drawImage(bilde, this.xpos, this.ypos , sizex, sizey)
         }
-        else{
-            ctx.fillStyle = "black"
-        }
-        ctx.fillText(this.sign, this.xpos + (sizex/2), this.ypos + (sizey/2))
-        ctx.stroke()
         if(turn =="white"){
             turn = "black"
         }
