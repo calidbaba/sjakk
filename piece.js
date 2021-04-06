@@ -5,6 +5,7 @@ class Piece{
         this.dead = dead
         this.color = color
         this.sign = sign
+        this.bilde
     }
     presence(piece){
         if (this.dead == false){
@@ -36,6 +37,8 @@ class Piece{
         bilde.onload = () => {
             ctx.drawImage(bilde, this.xpos, this.ypos , sizex, sizey)
         }
+        this.bilde = bilde
+
         if(turn =="white"){
             turn = "black"
         }

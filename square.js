@@ -6,6 +6,7 @@ class Square{
         this.occupied = false,
         this.xpos = xpos
         this.ypos = ypos
+        this.possible = false
     }
     draw(){
         if(this.xpos == 0){
@@ -33,7 +34,6 @@ class Square{
     reDraw(){
         ctx.fillStyle = this.color
         ctx.fillRect(this.xpos, this.ypos, height/cells, width/cells)
-        ctx.stroke()
     }
     getPosx(){
         return this.xpos 
@@ -44,4 +44,16 @@ class Square{
     hasPiece(piece){
         this.occupied = piece
     }
+    showPossible(){
+        ctx.beginPath();
+        ctx.fillStyle = "green"
+        ctx.arc(this.xpos+sizex/2,this.ypos+sizey/2, 10, 0, 2 * Math.PI);
+        ctx.fill()
+        console.log(this)
+        possible_tiles.push(this)
+    }
+
+
+
+
 }

@@ -5,6 +5,11 @@ let matrix = [];
 let pawns = [];
 let sizex = width/cells
 let sizey = height/cells
+let possible_tiles = [];
+let current_piece
+let animate_id
+let isMouseDown = false
+let pos = [0,0]
 
 let boardEl = document.getElementById("board")
 boardEl.height = height
@@ -16,6 +21,17 @@ let ctx = boardEl.getContext("2d")
 //event handler for clicks
 boardEl.addEventListener("mousedown", checkClick)
 boardEl.addEventListener("mouseup", checkUp)
+
+boardEl.addEventListener("mousedown", () => {
+   isMouseDown = true
+    addEventListener("mousemove", musen_beveger)
+
+})
+function musen_beveger(e){
+    pos[0] = e.clientX
+    pos[1] = e.clientY
+    requestAnimationFrame(move_piece)
+}
 //making board
 for(let i=0; i<cells; i++){
     let middler = []
@@ -119,19 +135,55 @@ function makeKing(){
     king.presence(king)
 }
 
+function removePossible(){
+    for (i of possible_tiles){
+        i.reDraw()
+    }
+    possible_tiles =  []
+}
 
+function move_piece(e){
+    if (typeof selected !== 'undefined'){
+        selected.occupied.bilde.style.position = "absolute"
+        selected.occupied.bilde.style.left = `${pos[0]}px`
+        selected.occupied.bilde.style.top = `${pos[1]}px`
+        document.body.appendChild(selected.occupied.bilde)
+    }
+}
 let selected
 function checkClick(e){
-    selected = findPiece(e.clientX, e.clientY)
-    console.log(selected)
-    console.log(selected.occupied)
-}
-function checkUp(e){
-    
     let x = Math.floor(e.clientX/sizex)
     let y = Math.floor(e.clientY/sizey)
-    if (selected.occupied != false && selected.occupied.color == turn){
+    /*if (matrix[y][x].occupied != false && matrix[y][x].occupied.color == turn){
+        animate_id = requestAnimationFrame(move_piece)
+    }*/
+    if(possible_tiles.includes(matrix[y][x])){
         selected.occupied.move(matrix[y][x])
+        removePossible()
+        console.log("kjøreer")
+        return
+
+    }
+    removePossible()
+    selected = findPiece(e.clientX, e.clientY)
+    console.log("les selected", selected)
+
+    //console.log(selected)
+    //console.log(selected.occupied)
+    if (selected.occupied != false && selected.occupied.color == turn){
+        selected.occupied.check()
+    }
+}
+function checkUp(e){
+    removeEventListener("mousemove", musen_beveger)
+    let x = Math.floor(e.clientX/sizex)
+    let y = Math.floor(e.clientY/sizey)
+    if(possible_tiles.includes(matrix[y][x])){
+        selected.occupied.move(matrix[y][x])
+        removePossible()
+        console.log("kjøreer")
+        return
+
     }
 }
 function findPiece(x,y){
@@ -144,10 +196,6 @@ function findPiece(x,y){
         ypos = 7
     }
     return matrix[ypos][xpos]
-    //if (matrix[xpos][ypos].occupied != false){
-    //    console.log(matrix[xpos][ypos].occupied)
-
-    //}
 
 }
 makePawns()
