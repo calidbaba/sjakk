@@ -10,8 +10,16 @@ class Queen extends Piece{
         this.flytt(dennex, denney, square) 
     }
     check(){
-        this.moveDiagonal()
-        this.moveStraight()
+        if(this.constructor.name == "Queen"){
+            this.moveDiagonal()
+            this.moveStraight()
+        }
+        else if(this.constructor.name == "Tower"){
+            this.moveStraight()
+        }
+        else if(this.constructor.name == "Runner"){
+            this.moveDiagonal()
+        }
     }
     moveDiagonal(){
         let dennex = Math.floor(this.xpos/100)
