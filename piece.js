@@ -46,4 +46,12 @@ class Piece{
             turn = "white"
         }
     }
+    nyDraw(){
+        let bilde = new Image(sizex, sizey)
+        bilde.src = `bilder/${this.sign}.${this.color}`
+        bilde.onload = () => {
+            ctx.drawImage(bilde, this.xpos, this.ypos , sizex, sizey)
+        }
+        this.bilde = bilde
+    }
 }

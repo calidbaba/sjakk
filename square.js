@@ -32,6 +32,9 @@ class Square{
         ctx.stroke()
     }
     reDraw(){
+        if(this.occupied != false){
+            this.occupied.nyDraw()
+        }
         ctx.fillStyle = this.color
         ctx.fillRect(this.xpos, this.ypos, height/cells, width/cells)
     }
