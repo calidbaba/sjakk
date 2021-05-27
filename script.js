@@ -148,6 +148,7 @@ function checkClick(e){
         animate_id = requestAnimationFrame(move_piece)
     }*/
     if(possible_tiles.includes(matrix[y][x])){
+        console.log("her kjem er", selected.occupied)
         selected.occupied.move(matrix[y][x])
         removePossible()
         return
