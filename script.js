@@ -23,14 +23,11 @@ boardEl.addEventListener("mousedown", checkClick)
 boardEl.addEventListener("mouseup", checkUp)
 
 boardEl.addEventListener("mousedown", () => {
-   isMouseDown = true
     addEventListener("mousemove", musen_beveger)
-
 })
 function musen_beveger(e){
     pos[0] = e.clientX
     pos[1] = e.clientY
-    requestAnimationFrame(move_piece)
 }
 //making board
 for(let i=0; i<cells; i++){
@@ -142,31 +139,27 @@ function removePossible(){
     possible_tiles =  []
 }
 
-function move_piece(e){
-    if (typeof selected !== 'undefined'){
-        selected.occupied.bilde.style.position = "absolute"
-        selected.occupied.bilde.style.left = `${pos[0]}px`
-        selected.occupied.bilde.style.top = `${pos[1]}px`
-        document.body.appendChild(selected.occupied.bilde)
-    }
-}
 let selected
 function checkClick(e){
     let x = Math.floor(e.clientX/sizex)
     let y = Math.floor(e.clientY/sizey)
+    console.log("boi")
     /*if (matrix[y][x].occupied != false && matrix[y][x].occupied.color == turn){
         animate_id = requestAnimationFrame(move_piece)
     }*/
     if(possible_tiles.includes(matrix[y][x])){
         selected.occupied.move(matrix[y][x])
         removePossible()
-        console.log("kjøreer")
         return
-
     }
     removePossible()
+    let oldSelected = selected
     selected = findPiece(e.clientX, e.clientY)
-    console.log("les selected", selected)
+    if(oldSelected == selected){
+        removePossible()
+        selected = null
+        return
+    }
 
     //console.log(selected)
     //console.log(selected.occupied)
@@ -175,6 +168,7 @@ function checkClick(e){
     }
 }
 function checkUp(e){
+    console.log("checkuo kjører")
     removeEventListener("mousemove", musen_beveger)
     let x = Math.floor(e.clientX/sizex)
     let y = Math.floor(e.clientY/sizey)
@@ -183,8 +177,8 @@ function checkUp(e){
         removePossible()
         console.log("kjøreer")
         return
-
     }
+    isMouseDown = false
 }
 function findPiece(x,y){
     let xpos = Math.floor(x/sizex)
